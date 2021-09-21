@@ -67,9 +67,43 @@ static bool is_aec_input(const struct alsa_stream_in* in) {
     return aec_input;
 }
 
+static bool hdmi_supports_audio(audio_devices_t devices) {
+    FILE *file;
+    struct edid edid_data;
+    int i;
+
+    file = fopen(HDMI_EDID_PATH, "rb");
+    if (file == NULL) {
+        ALOGE("Unable to open EDID '%s'", HDMI_EDID_PATH);
+        return false; // or should we fall back to true ?
+    }
+
+    fread(&edid_data, 1, sizeof(edid_data), file);
+    fclose(file);
+    
+    for (i = 0;
+        i < (edid_data.num_extensions < MAX_EDID_EXTENSIONS
+        ? edid_data.num_extensions : MAX_EDID_EXTENSIONS); i++)
+    {
+        struct edid_extension *ext = &edid_data.extensions[i];
+        if (ext->tag != 2)
+            continue;
+        // Bit 6: "display supports basic audio"
+        if (ext->info & 0b01000000) {
+            ALOGE("CA:: %s() HDMI DOES SUPPORT BASIC AUDIO", __func__);
+            return true;
+        }
+    }
+
+    return false;
+}
+
 static int get_audio_output_port(audio_devices_t devices) {
     /* Only HDMI out for now #FIXME */
-    return PORT_HDMI;
+    if (hdmi_supports_audio(devices))
+        return PORT_HDMI;
+    else
+        return PORT_INTERNAL_SPEAKER;
 }
 
 static int get_audio_card(int direction, int port) {

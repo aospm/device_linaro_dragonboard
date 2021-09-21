@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <mixer>
-	<!-- Enable HDMI out -->
+	<!-- Might have to be in a specific path -->
+	<ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+
 	<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+	<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia2" value="1" />
+	<ctl name="SLIM RX0 MUX" value="AIF1_PB" />
+	<ctl name="SLIM RX0 MUX" value="ZERO" />
+	<ctl name="SLIM RX1 MUX" value="ZERO" />
+	<ctl name="SLIM RX2 MUX" value="ZERO" />
+	<ctl name="SLIM RX3 MUX" value="ZERO" />
+	<ctl name="SLIM RX4 MUX" value="ZERO" />
+	<ctl name="SLIM RX5 MUX" value="ZERO" />
+	<ctl name="SLIM RX6 MUX" value="AIF1_PB" />
+	<ctl name="SLIM RX7 MUX" value="AIF1_PB" />
+	<ctl name="RX INT7_1 MIX1 INP0" value="RX6" />
+	<ctl name="RX INT8_1 MIX1 INP0" value="RX7" />
+	<ctl name="COMP7 Switch" value="1" />
+	<ctl name="COMP8 Switch" value="1" />
+	<ctl name="SpkrLeft COMP Switch" value="1" />
+	<ctl name="SpkrLeft BOOST Switch" value="1" />
+	<ctl name="SpkrLeft VISENSE Switch" value="0" />
+	<ctl name="SpkrLeft DAC Switch" value="1" />
+	<ctl name="SpkrRight COMP Switch" value="1" />
+	<ctl name="SpkrRight BOOST Switch" value="1" />
+	<ctl name="SpkrRight VISENSE Switch" value="0" />
+	<ctl name="SpkrRight DAC Switch" value="1" />
+	<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia2" value="1" />
 </mixer>

@@ -1,0 +1,5 @@
+vndbinder_use(hal_audio_default);
+
+# To read EDID
+allow hal_audio_default sysfs_gpu:dir { search };
+allow hal_audio_default sysfs_gpu:file { open read getattr };

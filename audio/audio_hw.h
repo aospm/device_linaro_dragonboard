@@ -30,6 +30,8 @@
 /* Minimum granularity - Arbitrary but small value */
 #define CODEC_BASE_FRAME_COUNT 32
 
+#define HDMI_EDID_PATH "/sys/class/drm/card0-HDMI-A-1/edid"
+
 #define CHANNEL_STEREO 2
 
 #ifdef AEC_HAL
@@ -67,6 +69,25 @@
 
 #define SPEAKER_EQ_FILE "/vendor/etc/speaker_eq.fir"
 #define SPEAKER_MAX_EQ_LENGTH 512
+
+// There could technically be more than this but it's unlikely, and in either case
+// the extension we want (CEA EDID) will probably be first
+#define MAX_EDID_EXTENSIONS 4
+
+struct edid_extension {
+    unsigned char tag;
+    unsigned char rev;
+    unsigned char dtd_offset;
+    unsigned char info;
+    unsigned char blocks[124];
+};
+
+struct edid {
+    unsigned char _stuff[126]; // We don't care about other EDID data
+    unsigned char num_extensions;
+    unsigned char checksum;
+    struct edid_extension extensions[MAX_EDID_EXTENSIONS];
+};
 
 struct alsa_audio_device {
     struct audio_hw_device hw_device;
