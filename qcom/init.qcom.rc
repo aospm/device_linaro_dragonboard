@@ -1,3 +1,10 @@
+service set_hw /vendor/bin/set_hw.sh
+    class core
+    user root
+    group system
+    disabled
+    oneshot
+
 service qrtr-ns /vendor/bin/qrtr-ns -f 1
     class core
     user root
@@ -27,11 +34,18 @@ service rmtfs /vendor/bin/rmtfs -o /dev/block/platform/soc@0/1d84000.ufshc/by-na
     oneshot
 
 on early-init
+    start set_hw
     exec - root -- /vendor/bin/qrtr-cfg 1
     start qrtr-ns
 
 on post-fs
     start pd_mapper
+
+on late-fs && property:vendor.hw=db45c
+    exec - system audio -- /system/bin/tinymix "QUAT_MI2S_RX Audio Mixer MultiMedia1" 1
+
+on late-fs && property:vendor.hw=rb5
+    exec - system audio -- /system/bin/tinymix "TERT_MI2S_RX Audio Mixer MultiMedia1" 1
 
 on post-fs-data
     mkdir /data/vendor
