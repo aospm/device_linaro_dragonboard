@@ -21,6 +21,8 @@ endif
 ifeq ($(DB845C_USES_GKI), true)
   DB845C_MODS := $(wildcard $(DB845C_KERNEL_DIR)/*.ko)
   ifneq ($(DB845C_MODS),)
-    BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(DB845C_MODS)
+    VENDOR_KERN_MODS := %/qcom_q6v5_adsp.ko %/qcom_q6v5_mss.ko %/qcom_q6v5_pas.ko
+    BOARD_VENDOR_KERNEL_MODULES := $(filter $(VENDOR_KERN_MODS),$(KERNEL_MODS))
+    BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(filter-out $(VENDOR_KERN_MODS),$(KERNEL_MODS))
   endif
 endif
