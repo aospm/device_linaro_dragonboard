@@ -18,6 +18,7 @@
 #define _YUKAWA_AUDIO_HW_H_
 
 #include <hardware/audio.h>
+#include <system/audio.h>
 #include <tinyalsa/asoundlib.h>
 
 #include "fir_filter.h"
@@ -26,7 +27,8 @@
 #define PORT_INTERNAL_SPEAKER 1
 #define PORT_BUILTIN_MIC 3
 
-#define MIXER_XML_PATH "/vendor/etc/mixer_paths.xml"
+#define MIXER_XML_PATH_LEN 4096
+#define MIXER_XML_PATH "/vendor/etc/mixer_paths."
 /* Minimum granularity - Arbitrary but small value */
 #define CODEC_BASE_FRAME_COUNT 32
 
@@ -75,6 +77,8 @@ struct alsa_audio_device {
     struct alsa_stream_in *active_input;
     struct alsa_stream_out *active_output;
     struct audio_route *audio_route;
+    int active_port;
+    int default_card;
     struct mixer *mixer;
     bool mic_mute;
     struct aec_t *aec;
@@ -122,6 +126,11 @@ struct aec_info {
     uint64_t timestamp_usec;
     unsigned int available;
     size_t bytes;
+};
+
+struct parse_device {
+    const char *name;
+    audio_devices_t device;
 };
 
 #endif /* #ifndef _YUKAWA_AUDIO_HW_H_ */

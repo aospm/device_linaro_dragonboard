@@ -1,0 +1,6 @@
+<mixer>
+    <!-- Enable HDMI out for rb5 -->
+    <path name="hdmi" device="Qualcomm-RB5-WSA8815-Speakers-DMIC0,0">
+        <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+    </path>
+</mixer>
